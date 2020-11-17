@@ -1,6 +1,6 @@
 {
   "name": "@scaffold-eth/monorepo",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "keywords": [
     "ethereum",
     "react",
@@ -15,6 +15,7 @@
     "react-app:start": "yarn workspace @scaffold-eth/react-app start",
     "react-app:test": "yarn workspace @scaffold-eth/react-app test",
     "build": "yarn workspace @scaffold-eth/react-app build --max-old-space-size=12288",
+    "giveth": "yarn workspace @scaffold-eth/giveth start",
     "chain": "yarn workspace @scaffold-eth/hardhat chain",
     "node": "yarn workspace @scaffold-eth/hardhat chain",
     "test": "yarn workspace @scaffold-eth/hardhat test",
