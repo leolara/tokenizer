@@ -9,6 +9,8 @@ import "hardhat/console.sol";
 
 //NiftyToken
 contract ProjectContract is ERC721, Ownable {
+    event ProjectMinted(address sender, string purpose);
+
     constructor() public ERC721("GameItem", "ITM") {}
 
     address public contractRegistry;
@@ -21,6 +23,19 @@ contract ProjectContract is ERC721, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
     using SafeMath for uint256;
+
+    function sayHi() public view returns (string memory) {
+        return ("hi");
+    }
+
+    function ownerBalanceOf(address owner) public view returns (uint256) {
+        uint256 balance = balanceOf(owner);
+        console.log("Owner balance is ", balance);
+        string memory strBalance = balance;
+        console.log("strBalancestrBalance: ", strBalance);
+        //https://github.com/pipermerriam/ethereum-string-utils
+        return (balance);
+    }
 
     function mintProject(address to, string memory tokenURI)
         public
@@ -41,7 +56,7 @@ contract ProjectContract is ERC721, Ownable {
         console.log("newItemId is ", newItemId);
         _mint(to, newItemId);
         _setTokenURI(newItemId, tokenURI);
-
+        emit ProjectMinted(to, tokenURI);
         return newItemId;
     }
 

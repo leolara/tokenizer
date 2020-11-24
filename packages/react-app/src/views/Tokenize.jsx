@@ -14,12 +14,20 @@ export default function Tokenize({address, mainnetProvider, userProvider, localP
   const purpose = useContractReader(readContracts,"YourContract", "purpose")
   console.log("🤗 purpose:",purpose)
 
+  const ownerBalanceOf = useContractReader(readContracts,"ProjectContract", "ownerBalanceOf", ["0xD2CAc44B9d072A0D6bD39482147d894f13C5CF32"])
+  console.log("🤗 ownerBalanceOf:", ownerBalanceOf)
+  
+  console.log("🤗 purpose:",purpose)
+
   //📟 Listen for broadcast events
   const setPurposeEvents = useEventListener(readContracts, "YourContract", "SetPurpose", localProvider, 1);
   console.log("📟 SetPurpose events:",setPurposeEvents)
 
   const projectCreatedEvents = useEventListener(readContracts, "ProjectFactory", "ProjectCreated", localProvider, 1);
   console.log("📟 SetPurpose events:",projectCreatedEvents)
+
+  const projectMintedEvents = useEventListener(readContracts, "ProjectContract", "ProjectMinted", localProvider, 1);
+  console.log("📟 SetPurpose events:",projectMintedEvents)
 
   /*
   const addressFromENS = useResolveName(mainnetProvider, "austingriffith.eth");
@@ -32,9 +40,9 @@ export default function Tokenize({address, mainnetProvider, userProvider, localP
         ⚙️ Here is an example UI that displays and sets the purpose in your smart contract:
       */}
       <div style={{border:"1px solid #cccccc", padding:16, width:400, margin:"auto",marginTop:64}}>
-        <h2>Example UI:</h2>
+        <h2>Tokenizer:</h2>
 
-        <h4>purpose: {purpose}</h4>
+        {/* <h4>Owner balance of NFTs is : {ownerBalanceOf}</h4> */}
 
         <Divider/>
 
@@ -49,14 +57,9 @@ export default function Tokenize({address, mainnetProvider, userProvider, localP
 
         <Divider/>
 
-        <div style={{margin:8}}>
-          <Input onChange={(e)=>{setNewPurpose(e.target.value)}} />
-          <Button onClick={()=>{
-            console.log("newPurpose",newPurpose)
-            /* look how you call setPurpose on your contract: */
-            tx( writeContracts.YourContract.setPurpose(newPurpose) )
-          }}>Set Purpose</Button>
-        </div>
+        <h2>Projects NFTs</h2>
+
+    
 
         <Divider />
 
@@ -69,6 +72,25 @@ export default function Tokenize({address, mainnetProvider, userProvider, localP
 
         <Divider />
 
+        Your Projects:
+        <List
+          bordered
+          dataSource={projectMintedEvents}
+          renderItem={(item) => {
+            return (
+              <List.Item key={item.blockNumber+"_"+item.sender+"_"+item.purpose}>
+                <Address
+                    value={item[0]}
+                    ensProvider={mainnetProvider}
+                    fontSize={16}
+                  /> =>
+                {item[1]}
+              </List.Item>
+            )
+          }}
+        />
+
+        <Divider />
         ENS Address Example:
         <Address
           value={"0x34aA3F359A9D614239015126635CE7732c18fDF3"} /* this will show as austingriffith.eth */
