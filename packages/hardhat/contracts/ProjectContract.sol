@@ -1,15 +1,22 @@
 pragma solidity >=0.6.0 <0.7.0;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
+import "./IContractRegistry.sol";
+import "hardhat/console.sol";
 
 //NiftyToken
-contract ProjectContract is ERC721 {
-    constructor(string memory name, string memory symbol)
-        public
-        ERC721("GameItem", "ITM")
-    {}
+contract ProjectContract is ERC721, Ownable {
+    constructor() public ERC721("GameItem", "ITM") {}
+
+    address public contractRegistry;
+
+    //onlyOwner
+    function setContractRegistry(address _address) public onlyOwner {
+        contractRegistry = _address;
+    }
 
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
@@ -19,10 +26,19 @@ contract ProjectContract is ERC721 {
         public
         returns (uint256)
     {
-        require(msg.sender == 0xD2CAc44B9d072A0D6bD39482147d894f13C5CF32);
+        // console.log(
+        //     "projectFactoryAddress is ",
+        //     IContractRegistry(contractRegistry).projectFactoryAddress()
+        // );
+        // require(
+        //     msg.sender ==
+        //         IContractRegistry(contractRegistry).projectFactoryAddress()
+        // );
         _tokenIds.increment();
 
         uint256 newItemId = _tokenIds.current();
+        console.log("minting to ", to);
+        console.log("newItemId is ", newItemId);
         _mint(to, newItemId);
         _setTokenURI(newItemId, tokenURI);
 

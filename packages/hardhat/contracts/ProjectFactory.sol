@@ -3,8 +3,8 @@ pragma solidity >=0.6.0 <0.7.0;
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./ProjectContract.sol";
-
-//import "./IProjectContract.sol";
+import "./IContractRegistry.sol";
+import "./IProjectContract.sol";
 
 contract ProjectFactory is Ownable {
     event ProjectCreated(address sender, string purpose);
@@ -27,21 +27,32 @@ contract ProjectFactory is Ownable {
         // what should we do on deploy?
     }
 
-    // function projectContract() private view returns (IProjectContract) {
-    //     return IProjectContract(0xD2CAc44B9d072A0D6bD39482147d894f13C5CF32);
-    // }
+    address public contractRegistry;
 
-    //function createProject(string memory newProjectName) public {
+    function setContractRegistry(address _address) public onlyOwner {
+        contractRegistry = _address;
+    }
+
+    function projectContract() private view returns (IProjectContract) {
+        return
+            IProjectContract(
+                IContractRegistry(contractRegistry).projectAddress()
+            );
+    }
+
     function createProject(string memory newProjectName) public {
         // Check if it exists
         projectName = newProjectName;
 
-        // projectId = projectContract().mintProject(msg.sender, "");
-        ProjectContract projectContract = new ProjectContract(
-            newProjectName,
-            "PRO"
+        //projectId = projectContract().mintProject(msg.sender, "");
+        // ProjectContract projectContract = new ProjectContract(
+        //     newProjectName,
+        //     "PRO"
+        // );
+        projectId = projectContract().mintProject(
+            msg.sender,
+            "http://jamespfarrell.com"
         );
-        projectId = projectContract.mintProject(msg.sender, "");
 
         console.log(msg.sender, "created projectId", projectId);
         projects.push(Project(projectName, 1, 1));
