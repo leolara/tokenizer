@@ -12,14 +12,24 @@ const main = async () => {
   // ! AUTO DEPLOY
   // * -----------
   // to read contract directory and deploy them all (add ".args" files for arguments)
-  await autoDeploy();
+  // james - await autoDeploy();
 
   // ! OR CUSTOM DEPLOY
   // * ----------------
   // custom deploy (to use deployed addresses dynamically for example:)
-  // const exampleToken = await deploy("ExampleToken")
-  // const examplePriceOracle = await deploy("ExamplePriceOracle")
-  // const smartContractWallet = await deploy("SmartContractWallet",[exampleToken.address,examplePriceOracle.address])
+  //const contractArgs = readArgsFile(contractName);
+
+  const ProjectContract = await deploy("ProjectContract")
+  console.log(`ProjectContract.address ---> : ${ProjectContract.address}`)
+  const ProjectFactory = await deploy("ProjectFactory")
+  console.log(`ProjectFactory.address ---> : ${ProjectFactory.address}`)
+
+  const ContractRegistry = await deploy("ContractRegistry")
+  await ProjectFactory.setContractRegistry(ContractRegistry.address)
+  console.log(`ContractRegistry.address ---> : ${ContractRegistry.address}`)
+
+  await ContractRegistry.setProjectAddress(ProjectContract.address)
+  await ContractRegistry.setProjectFactoryAddress(ProjectFactory.address)
 
   console.log(
     " 💾  Artifacts (address, abi, and args) saved to: ",
@@ -40,6 +50,7 @@ const autoDeploy = async () => {
   for (let i=0; i < contractList.length; i++) {
     const file = contractList[i];
     const contractName = file.replace(".sol", "");
+    console.log(`contractName ---> : ${contractName}`)
     const contractArgs = readArgsFile(contractName);
     const deployed = await deploy(contractName, contractArgs);
 
