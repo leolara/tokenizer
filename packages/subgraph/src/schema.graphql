@@ -6,6 +6,22 @@ type Purpose @entity {
   transactionHash: String!
 }
 
+type Project @entity {
+  id: ID!
+  to: Bytes!
+  owner: Owner!
+  createdAt: BigInt!
+  transactionHash: String!
+}
+
+type Owner @entity {
+  id: ID!
+  address: Bytes!
+  projects: [Project!] @derivedFrom(field: "owner")
+  createdAt: BigInt!
+  projectCount: BigInt!
+}
+
 type Sender @entity {
   id: ID!
   address: Bytes!

@@ -79,13 +79,13 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "sender",
+        "name": "to",
         "type": "address"
       },
       {
         "indexed": false,
         "internalType": "string",
-        "name": "purpose",
+        "name": "tokenURI",
         "type": "string"
       }
     ],
@@ -227,7 +227,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "to",
+        "name": "mintTo",
         "type": "address"
       },
       {
@@ -370,19 +370,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "sayHi",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "pure",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -440,6 +427,19 @@
         "internalType": "string",
         "name": "",
         "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "to",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",

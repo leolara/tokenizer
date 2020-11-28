@@ -3,7 +3,8 @@ import {
   YourContract,
   SetPurpose
 } from "../generated/YourContract/YourContract"
-import { Purpose, Sender } from "../generated/schema"
+import { ProjectMinted } from "../generated/ProjectContract/ProjectContract"
+import { Purpose, Sender, Project, Owner } from "../generated/schema"
 
 export function handleSetPurpose(event: SetPurpose): void {
 
@@ -30,5 +31,34 @@ export function handleSetPurpose(event: SetPurpose): void {
 
   purpose.save()
   sender.save()
+
+}
+
+export function handleProjectMinted(event: ProjectMinted): void {
+
+  let ownerString = event.params.to.toHexString()
+
+  let owner = Owner.load(ownerString)
+
+  if (owner == null) {
+    owner = new Owner(ownerString)
+    owner.address = event.params.to
+    owner.createdAt = event.block.timestamp
+    owner.projectCount = BigInt.fromI32(1)
+  }
+  else {
+    owner.projectCount = owner.projectCount.plus(BigInt.fromI32(1))
+  }
+
+  let project = new Project(event.transaction.hash.toHex() + "-" + event.logIndex.toString())
+
+  project.to = event.params.to
+  project.owner = ownerString
+  project.createdAt = event.block.timestamp
+  project.transactionHash = event.transaction.hash.toHex()
+
+  project.save()
+  owner.save()
+  
 
 }

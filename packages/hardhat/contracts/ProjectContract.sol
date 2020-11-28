@@ -7,11 +7,11 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./IContractRegistry.sol";
 import "hardhat/console.sol";
 
-//NiftyToken
 contract ProjectContract is ERC721, Ownable {
-    event ProjectMinted(address sender, string purpose);
+    event ProjectMinted(address to, string tokenURI);
+    address public to;
 
-    constructor() public ERC721("GameItem", "ITM") {}
+    constructor() public ERC721("ProjectContract", "PRO") {}
 
     address public contractRegistry;
 
@@ -24,10 +24,6 @@ contract ProjectContract is ERC721, Ownable {
     Counters.Counter private _tokenIds;
     using SafeMath for uint256;
 
-    function sayHi() public pure returns (string memory) {
-        return ("hi");
-    }
-
     function ownerBalanceOf(address owner) public view returns (uint256) {
         uint256 balance = balanceOf(owner);
         console.log("Owner balance is ", balance);
@@ -36,10 +32,11 @@ contract ProjectContract is ERC721, Ownable {
         return (balance);
     }
 
-    function mintProject(address to, string memory tokenURI)
+    function mintProject(address mintTo, string memory tokenURI)
         public
         returns (uint256)
     {
+        to = mintTo;
         // console.log(
         //     "projectFactoryAddress is ",
         //     IContractRegistry(contractRegistry).projectFactoryAddress()
@@ -51,11 +48,11 @@ contract ProjectContract is ERC721, Ownable {
         _tokenIds.increment();
 
         uint256 newItemId = _tokenIds.current();
-        console.log("minting to ", to);
+        console.log("minting mintTo ", mintTo);
         console.log("newItemId is ", newItemId);
-        _mint(to, newItemId);
+        _mint(mintTo, newItemId);
         _setTokenURI(newItemId, tokenURI);
-        emit ProjectMinted(to, tokenURI);
+        emit ProjectMinted(mintTo, tokenURI);
         return newItemId;
     }
 

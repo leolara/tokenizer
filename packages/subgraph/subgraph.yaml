@@ -23,3 +23,23 @@ dataSources:
         - event: SetPurpose(address,string)
           handler: handleSetPurpose
       file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: ProjectContract
+    network: localhost
+    source:
+      address: '0xC9a43158891282A2B1475592D5719c001986Aaec'
+      abi: ProjectContract
+      startBlock: 1
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Project
+      abis:
+        - name: ProjectContract
+          file: ./abis/ProjectContract.json
+      eventHandlers:
+        - event: ProjectMinted(address,string)
+          handler: handleProjectMinted
+      file: ./src/mapping.ts
