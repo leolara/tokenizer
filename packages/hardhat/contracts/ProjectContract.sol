@@ -49,7 +49,7 @@ contract ProjectContract is ERC721, Ownable {
         _tokenIds.increment();
 
         uint256 newItemId = _tokenIds.current();
-        console.log("minting mintTo ", mintTo);
+        console.log("minting ", projectName, " mintTo ", mintTo);
         console.log("newItemId is ", newItemId);
         _mint(mintTo, newItemId);
         _setTokenURI(newItemId, tokenURI);
