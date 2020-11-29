@@ -40,39 +40,25 @@ contract ProjectFactory is Ownable {
             );
     }
 
-    function createProject(string memory newProjectName) public {
+    function createProject(
+        string memory newProjectName,
+        string memory newProjectDetailsUrl
+    ) public {
         // Check if it exists
         projectName = newProjectName;
 
-        //projectId = projectContract().mintProject(msg.sender, "");
-        // ProjectContract projectContract = new ProjectContract(
-        //     newProjectName,
-        //     "PRO"
-        // );
         projectId = projectContract().mintProject(
             msg.sender,
-            "http://jamespfarrell.com"
+            newProjectName,
+            newProjectDetailsUrl
         );
 
         console.log(msg.sender, "created projectId", projectId);
         projects.push(Project(projectName, 1, 1));
         uint256 id = projects.length - 1;
-        // console.log("projects - ", projects);
+
         projectToOwner[id] = msg.sender;
         ownerProjectCount[msg.sender]++;
         emit ProjectCreated(msg.sender, projectName);
     }
-
-    //Creates it as first base
-    // function createProjectLocal(string memory newProjectName) public {
-    //     // require(ownerZombieCount[msg.sender] == 0);
-    //     projectName = newProjectName;
-    //     console.log(msg.sender, "created project", projectName);
-    //     projects.push(Project(projectName, 1, 1));
-    //     uint256 id = projects.length - 1;
-    //     // console.log("projects - ", projects);
-    //     projectToOwner[id] = msg.sender;
-    //     ownerProjectCount[msg.sender]++;
-    //     emit ProjectCreated(msg.sender, projectName);
-    // }
 }

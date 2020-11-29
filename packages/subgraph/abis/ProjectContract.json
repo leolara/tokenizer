@@ -232,6 +232,11 @@
       },
       {
         "internalType": "string",
+        "name": "projectName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
         "name": "tokenURI",
         "type": "string"
       }

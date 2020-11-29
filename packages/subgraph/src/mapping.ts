@@ -37,6 +37,7 @@ export function handleSetPurpose(event: SetPurpose): void {
 export function handleProjectMinted(event: ProjectMinted): void {
 
   let ownerString = event.params.to.toHexString()
+  let projectDetailsURIString = event.params.tokenURI;
 
   let owner = Owner.load(ownerString)
 
@@ -54,6 +55,7 @@ export function handleProjectMinted(event: ProjectMinted): void {
 
   project.to = event.params.to
   project.owner = ownerString
+  project.projectDetailsURI = projectDetailsURIString
   project.createdAt = event.block.timestamp
   project.transactionHash = event.transaction.hash.toHex()
 

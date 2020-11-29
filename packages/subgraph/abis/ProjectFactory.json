@@ -61,6 +61,11 @@
         "internalType": "string",
         "name": "newProjectName",
         "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "newProjectDetailsUrl",
+        "type": "string"
       }
     ],
     "name": "createProject",

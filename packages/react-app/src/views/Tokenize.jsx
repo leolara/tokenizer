@@ -9,6 +9,7 @@ export default function Tokenize({address, mainnetProvider, userProvider, localP
 
   const [newPurpose, setNewPurpose] = useState("loading...");
   const [newProject, setNewProject] = useState("loading...");
+  const [newProjectUrl, setNewProjectUrl] = useState("loading...");
 
   // keep track of a variable from the contract in the local React state:
   const purpose = useContractReader(readContracts,"YourContract", "purpose")
@@ -48,11 +49,12 @@ export default function Tokenize({address, mainnetProvider, userProvider, localP
 
         <div style={{margin:8}}>
           <Input onChange={(e)=>{setNewProject(e.target.value)}} placeholder="Enter project name"/>
+          <Input onChange={(e)=>{setNewProjectUrl(e.target.value)}} placeholder="Enter project details URL"/>
           <Button onClick={()=>{
             console.log("createProject",newProject)
             /* look how you call setPurpose on your contract: */
-            tx( writeContracts.ProjectFactory.createProject(newProject) )
-          }}>Create project</Button>
+            tx( writeContracts.ProjectFactory.createProject(newProject, newProjectUrl) )
+          }}>Create project!</Button>
         </div>
 
         <Divider/>

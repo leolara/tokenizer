@@ -14,6 +14,7 @@ import fetch from 'isomorphic-fetch';
 function Subgraph(props) {
 
   function graphQLFetcher(graphQLParams) {
+    console.log('graphQLParams', graphQLParams)
     return fetch(props.subgraphUri, {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },

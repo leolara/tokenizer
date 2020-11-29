@@ -32,10 +32,11 @@ contract ProjectContract is ERC721, Ownable {
         return (balance);
     }
 
-    function mintProject(address mintTo, string memory tokenURI)
-        public
-        returns (uint256)
-    {
+    function mintProject(
+        address mintTo,
+        string memory projectName,
+        string memory tokenURI
+    ) public returns (uint256) {
         to = mintTo;
         // console.log(
         //     "projectFactoryAddress is ",

@@ -9,6 +9,7 @@ type Purpose @entity {
 type Project @entity {
   id: ID!
   to: Bytes!
+  projectDetailsURI: String!
   owner: Owner!
   createdAt: BigInt!
   transactionHash: String!
