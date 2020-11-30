@@ -21,5 +21,7 @@ export default function usePoller(fn, delay, extraWatch) {
   // run at start too
   useEffect(() => {
     fn();
+    // FIXME: https://github.com/austintgriffith/scaffold-eth/pull/70#issuecomment-727628897
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[ extraWatch ]);
 }
