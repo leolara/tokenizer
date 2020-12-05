@@ -5,14 +5,6 @@ const bre = require("hardhat");
 const publishDir = "../react-app/src/contracts";
 const graphDir = "../subgraph"
 
-const skipPublishing = {
-  // Add Solidity files you don't want to publish here, together with
-  // a reason for skipping them.  For example, interfaces don't get
-  // deployed, so they won't get an .address file:
-  //
-  // "YourInterface.sol" : "interface",
-};
-
 function publishContract(contractName) {
   console.log(
     "Publishing",
@@ -79,6 +71,15 @@ function publishContract(contractName) {
 
 function shouldPublish(file) {
   if (file.indexOf(".sol") <= 0) {
+    return false;
+  }
+
+  if (file == "Vintage.sol") {
+    console.log(
+      "Skipping publishing",
+      chalk.cyan(file),
+      "(deployed at run-time)"
+    );
     return false;
   }
 

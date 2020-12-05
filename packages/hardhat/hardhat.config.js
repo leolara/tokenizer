@@ -92,6 +92,7 @@ module.exports = {
       "YourInterface.sol",
       "IContractRegistry.sol",
       "IProjectContract.sol",
+      "IVintage.sol",
     ]
   }
 };
