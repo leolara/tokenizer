@@ -88,7 +88,11 @@ module.exports = {
     }
   },
   contracts: {
-    interfaceFiles: ["YourInterface.sol"]
+    interfaceFiles: [
+      "YourInterface.sol",
+      "IContractRegistry.sol",
+      "IProjectContract.sol",
+    ]
   }
 };
 
