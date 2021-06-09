@@ -7,7 +7,6 @@ import { parseEther, formatEther } from "@ethersproject/units";
 
 export default function Tokenize({address, mainnetProvider, userProvider, localProvider, yourLocalBalance, price, tx, readContracts, writeContracts }) {
 
-  const [newPurpose, setNewPurpose] = useState("loading...");
   const [newProject, setNewProject] = useState("loading...");
 
   // keep track of a variable from the contract in the local React state:
@@ -20,9 +19,6 @@ export default function Tokenize({address, mainnetProvider, userProvider, localP
   
 
   //📟 Listen for broadcast events
-  const setPurposeEvents = useEventListener(readContracts, "YourContract", "SetPurpose", localProvider, 1);
-  console.log("📟 SetPurpose events:",setPurposeEvents)
-
   const projectCreatedEvents = useEventListener(readContracts, "ProjectFactory", "ProjectCreated", localProvider, 1);
   console.log("📟 SetPurpose events:",projectCreatedEvents)
 
@@ -57,21 +53,6 @@ export default function Tokenize({address, mainnetProvider, userProvider, localP
 
         <Divider/>
 
-        <h2>Projects NFTs</h2>
-
-    
-
-        <Divider />
-
-        Your Address:
-        <Address
-            value={address}
-            ensProvider={mainnetProvider}
-            fontSize={16}
-        />
-
-        <Divider />
-
         Your Projects:
         <List
           bordered
@@ -90,66 +71,7 @@ export default function Tokenize({address, mainnetProvider, userProvider, localP
           }}
         />
 
-        <Divider />
-        ENS Address Example:
-        <Address
-          value={"0x34aA3F359A9D614239015126635CE7732c18fDF3"} /* this will show as austingriffith.eth */
-          ensProvider={mainnetProvider}
-          fontSize={16}
-        />
-
         <Divider/>
-
-        {  /* use formatEther to display a BigNumber: */ }
-        <h2>Your Balance: {yourLocalBalance?formatEther(yourLocalBalance):"..."}</h2>
-
-        OR
-
-        <Balance
-          address={address}
-          provider={localProvider}
-          dollarMultiplier={price}
-        />
-
-        <Divider/>
-
-
-        {  /* use formatEther to display a BigNumber: */ }
-        <h2>Your Balance: {yourLocalBalance?formatEther(yourLocalBalance):"..."}</h2>
-
-        <Divider/>
-
-
-
-        Your Contract Address:
-        <Address
-            value={readContracts?readContracts.YourContract.address:readContracts}
-            ensProvider={mainnetProvider}
-            fontSize={16}
-        />
-
-        <Divider />
-
-        <div style={{margin:8}}>
-          <Button onClick={()=>{
-            /* look how you call setPurpose on your contract: */
-            tx( writeContracts.YourContract.setPurpose("🍻 Cheers") )
-          }}>Set Purpose to "🍻 Cheers"</Button>
-        </div>
-
-        <div style={{margin:8}}>
-          <Button onClick={()=>{
-            /*
-              you can also just craft a transaction and send it to the tx() transactor
-              here we are sending value straight to the contract's address:
-            */
-            tx({
-              to: writeContracts.YourContract.address,
-              value: parseEther("0.001")
-            });
-            /* this should throw an error about "no fallback nor receive function" until you add it */
-          }}>Send Value</Button>
-        </div>
 
         <div style={{margin:8}}>
           <Button onClick={()=>{
@@ -184,7 +106,7 @@ export default function Tokenize({address, mainnetProvider, userProvider, localP
         <h2>Events:</h2>
         <List
           bordered
-          dataSource={setPurposeEvents}
+          dataSource={projectCreatedEvents}
           renderItem={(item) => {
             return (
               <List.Item key={item.blockNumber+"_"+item.sender+"_"+item.purpose}>
