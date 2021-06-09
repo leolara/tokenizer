@@ -24,15 +24,14 @@ contract ProjectContract is ERC721, Ownable {
     Counters.Counter private _tokenIds;
     using SafeMath for uint256;
 
-    function sayHi() public view returns (string memory) {
+    function sayHi() public pure returns (string memory) {
         return ("hi");
     }
 
     function ownerBalanceOf(address owner) public view returns (uint256) {
         uint256 balance = balanceOf(owner);
         console.log("Owner balance is ", balance);
-        string memory strBalance = balance;
-        console.log("strBalancestrBalance: ", strBalance);
+
         //https://github.com/pipermerriam/ethereum-string-utils
         return (balance);
     }

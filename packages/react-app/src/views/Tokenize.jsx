@@ -14,10 +14,10 @@ export default function Tokenize({address, mainnetProvider, userProvider, localP
   const purpose = useContractReader(readContracts,"YourContract", "purpose")
   console.log("🤗 purpose:",purpose)
 
-  const ownerBalanceOf = useContractReader(readContracts,"ProjectContract", "ownerBalanceOf", ["0xD2CAc44B9d072A0D6bD39482147d894f13C5CF32"])
-  console.log("🤗 ownerBalanceOf:", ownerBalanceOf)
+  // const ownerBalanceOf = useContractReader(readContracts,"ProjectContract", "ownerBalanceOf", ["0xD2CAc44B9d072A0D6bD39482147d894f13C5CF32"])
+  // console.log("🤗 ownerBalanceOf:", ownerBalanceOf)
   
-  console.log("🤗 purpose:",purpose)
+  
 
   //📟 Listen for broadcast events
   const setPurposeEvents = useEventListener(readContracts, "YourContract", "SetPurpose", localProvider, 1);

@@ -20,11 +20,14 @@ const main = async () => {
   //const contractArgs = readArgsFile(contractName);
 
   const ProjectContract = await deploy("ProjectContract")
-  const ProjectFactory = await deploy("ProjectFactory")
   console.log(`ProjectContract.address ---> : ${ProjectContract.address}`)
+  const ProjectFactory = await deploy("ProjectFactory")
+  console.log(`ProjectFactory.address ---> : ${ProjectFactory.address}`)
 
   const ContractRegistry = await deploy("ContractRegistry")
   await ProjectFactory.setContractRegistry(ContractRegistry.address)
+  console.log(`ContractRegistry.address ---> : ${ContractRegistry.address}`)
+
   await ContractRegistry.setProjectAddress(ProjectContract.address)
   await ContractRegistry.setProjectFactoryAddress(ProjectFactory.address)
 
