@@ -23,6 +23,7 @@
     "@ethersproject/contracts": "^5.0.5",
     "@ethersproject/providers": "^5.0.12",
     "@ethersproject/units": "^5.0.6",
+    "@openzeppelin/contracts": "^3.2.0",
     "@ramp-network/ramp-instant-sdk": "^2.2.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -47,14 +48,14 @@
     "react-dom": "^16.14.0",
     "react-qr-reader": "^2.2.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.3",
+    "react-scripts": "3.4.3",
     "web3modal": "^1.9.1"
   },
   "devDependencies": {
     "@testing-library/dom": "^6.12.2",
     "@types/react": "^16.9.19",
     "chalk": "^4.1.0",
-    "eslint": "^7.5.0",
+    "eslint": "7.5.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-babel": "^5.3.1",
@@ -65,7 +66,10 @@
     "surge": "^0.21.5"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "jsx-a11y/anchor-is-valid": "off"
+    }
   },
   "scripts": {
     "build": "react-scripts build",
